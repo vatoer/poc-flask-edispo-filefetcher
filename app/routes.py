@@ -1,4 +1,5 @@
 from flask import Blueprint, request, send_file, jsonify
+from flask import current_app
 import os
 from .auth import verify_token
 
@@ -14,7 +15,11 @@ def serve_file(filename):
     if not username:
         return jsonify({'message': 'Invalid token'}), 401
 
-    file_path = os.path.join('C:\\xampp\\htdocs\\tes', filename)
+    secret_key = current_app.config['SECRET_KEY']
+    path_files_masuk = current_app.config['PATH_FILES_MASUK']
+    path_files_keluar = current_app.config['PATH_FILES_KELUAR']
+
+    file_path = os.path.join(path_files_masuk, filename)
     
     # console file_path
     print(file_path)
